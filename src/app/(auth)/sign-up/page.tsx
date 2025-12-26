@@ -1,9 +1,9 @@
-import React from 'react'
+"use client";
+
+import { SignUpCard } from "@/features/auth/components/sign-up-card";
 
 const SignUp = () => {
-  return (
-    <div>SignUp</div>
-  )
-}
+  return <SignUpCard />;
+};
 
-export default SignUp
+export default SignUp;

@@ -1,9 +1,9 @@
-import React from 'react'
+"use client";
+
+import { SignIncard } from "@/features/auth/components/sign-in-card";
 
 const SignIn = () => {
-  return (
-    <div>SignIn</div>
-  )
-}
+  return <SignIncard />;
+};
 
-export default SignIn
+export default SignIn;
