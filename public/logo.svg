@@ -1,0 +1,37 @@
+<svg
+  width="96"
+  height="32"
+  viewBox="0 0 96 32"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Icon background -->
+  <rect x="0" y="0" width="32" height="32" rx="6" fill="#2563eb"/>
+
+  <!-- Checklist -->
+  <rect x="8" y="6" width="16" height="20" rx="3" fill="white"/>
+
+  <circle cx="11" cy="11" r="1.5" fill="#2563eb"/>
+  <rect x="14" y="10" width="8" height="2" rx="1" fill="#2563eb"/>
+
+  <circle cx="11" cy="16" r="1.5" fill="#2563eb"/>
+  <rect x="14" y="15" width="6" height="2" rx="1" fill="#2563eb" opacity="0.8"/>
+
+  <circle cx="11" cy="21" r="1.5" fill="#2563eb"/>
+  <rect x="14" y="20" width="4" height="2" rx="1" fill="#2563eb" opacity="0.6"/>
+
+  <!-- Progress bar -->
+  <rect x="8" y="25" width="16" height="2" rx="1" fill="#2563eb" opacity="0.25"/>
+  <rect x="8" y="25" width="9" height="2" rx="1" fill="#2563eb"/>
+
+  <!-- Project name -->
+  <text
+    x="40"
+    y="22"
+    font-size="14"
+    font-weight="700"
+    fill="#2563eb"
+    font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif"
+  >
+    Trackly
+  </text>
+</svg>
