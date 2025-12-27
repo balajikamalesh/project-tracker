@@ -18,19 +18,14 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const signUpSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(16, "Password must be at most 16 characters"),
-});
+import { signUpSchema } from "../schema";
+import { useRegister } from "../api/use-register";
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export const SignUpCard = () => {
+  const { mutate } = useRegister();
+
   const {
     register,
     handleSubmit,
@@ -40,7 +35,7 @@ export const SignUpCard = () => {
   });
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+    mutate({ json: data });
   };
 
   return (

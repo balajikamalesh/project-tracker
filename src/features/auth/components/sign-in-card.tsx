@@ -10,19 +10,15 @@ import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Ca } from "zod/v4/locales";
+import { signInSchema } from "../schema";
 import Link from "next/link";
-
-const signInSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z
-    .string()
-    .min(1, "Required")
-});
+import { useLogin } from "../api/use-login";
 
 type SignInForm = z.infer<typeof signInSchema>;
 
 export const SignIncard = () => {
+  const { mutate } = useLogin();
+
   const {
     register,
     handleSubmit,
@@ -32,7 +28,7 @@ export const SignIncard = () => {
   });
 
   const onSubmit = (data: SignInForm) => {
-    console.log(data);
+    mutate({ json: data });
   };
 
   return (
