@@ -24,12 +24,12 @@ import { useRegister } from "../api/use-register";
 type SignUpFormData = z.infer<typeof signUpSchema>;
 
 export const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
   });
@@ -60,7 +60,6 @@ export const SignUpCard = () => {
               required
               type="text"
               placeholder="Enter your name"
-              disabled={isSubmitting}
             />
             {errors.name && (
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
@@ -72,7 +71,6 @@ export const SignUpCard = () => {
               required
               type="email"
               placeholder="Enter email address"
-              disabled={isSubmitting}
             />
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">
@@ -86,7 +84,6 @@ export const SignUpCard = () => {
               required
               type="password"
               placeholder="Enter password"
-              disabled={isSubmitting}
               min={8}
               max={16}
             />
@@ -100,7 +97,7 @@ export const SignUpCard = () => {
             type="submit"
             size="lg"
             className="w-full mt-2"
-            disabled={isSubmitting}
+            disabled={isPending}
           >
             Sign Up
           </Button>

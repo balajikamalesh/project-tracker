@@ -10,19 +10,20 @@ import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { signInSchema } from "../schema";
 import Link from "next/link";
+
+import { signInSchema } from "../schema";
 import { useLogin } from "../api/use-login";
 
 type SignInForm = z.infer<typeof signInSchema>;
 
 export const SignIncard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
   });
@@ -47,7 +48,6 @@ export const SignIncard = () => {
               required
               type="email"
               placeholder="Enter email address"
-              disabled={isSubmitting}
             />
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">
@@ -61,7 +61,6 @@ export const SignIncard = () => {
               required
               type="password"
               placeholder="Enter password"
-              disabled={isSubmitting}
               min={8}
               max={16}
             />
@@ -75,7 +74,7 @@ export const SignIncard = () => {
             type="submit"
             size="lg"
             className="w-full mt-2"
-            disabled={isSubmitting}
+            disabled={isPending}
           >
             Sign In
           </Button>
@@ -86,7 +85,7 @@ export const SignIncard = () => {
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
-          disabled={isSubmitting}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"
@@ -95,7 +94,7 @@ export const SignIncard = () => {
           Sign in with Google
         </Button>
         <Button
-          disabled={isSubmitting}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"

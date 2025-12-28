@@ -1,11 +1,13 @@
 import { client } from "@/lib/rpc";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferResponseType, InferRequestType} from "hono";
+import { useRouter } from "next/navigation";
 
 // Using the types esported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
 
 export const uselogout = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation<ResponseType, unknown>({
@@ -14,7 +16,7 @@ export const uselogout = () => {
       return await response.json();
     },
     onSuccess: () => {
-      // Invalidate the current user query to reflect the logged-out state
+      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
     }
   });

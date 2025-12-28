@@ -1,8 +1,12 @@
-"use client";
-
+import { getCurrent } from "@/features/auth/actions";
 import { SignIncard } from "@/features/auth/components/sign-in-card";
+import { redirect } from "next/navigation";
 
-const SignIn = () => {
+const SignIn = async () => {
+  const user = await getCurrent();
+
+  if (user) redirect("/");
+
   return <SignIncard />;
 };
 
