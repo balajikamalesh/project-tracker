@@ -21,7 +21,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
 
-type SignUpFormData = z.infer<typeof signUpSchema>;
+// Extend the schema to include confirmPassword and match check
+const signUpWithConfirmSchema = signUpSchema
+  .extend({
+    confirmPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+type SignUpFormData = z.infer<typeof signUpWithConfirmSchema>;
 
 export const SignUpCard = () => {
   const { mutate, isPending } = useRegister();
@@ -31,11 +43,13 @@ export const SignUpCard = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(signUpWithConfirmSchema),
   });
 
   const onSubmit = (data: SignUpFormData) => {
-    mutate({ json: data });
+    // Only send name, email, password to API
+    const { name, email, password } = data;
+    mutate({ json: { name, email, password } });
   };
 
   return (
@@ -90,6 +104,21 @@ export const SignUpCard = () => {
             {errors.password && (
               <p className="text-red-500 text-xs mt-1">
                 {errors.password.message}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              {...register("confirmPassword")}
+              required
+              type="password"
+              placeholder="Confirm password"
+              min={8}
+              max={16}
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.confirmPassword.message}
               </p>
             )}
           </div>
