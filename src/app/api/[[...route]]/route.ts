@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 
 import auth from "@/features/auth/server/route";
+import workspaces from "@/features/workspaces/server/route";
 
 // Hono.js uses code-based explicit routing unlike Next.js API routing which is file based.
 // So using Hono.js for simplicity.
@@ -10,7 +11,8 @@ import auth from "@/features/auth/server/route";
 const app = new Hono().basePath('/api');
 
 const routes = app
-  .route('/auth', auth);
+  .route('/auth', auth)
+  .route('/workspaces', workspaces);
 
 export const GET = handle(app);
 export const POST = handle(app);
