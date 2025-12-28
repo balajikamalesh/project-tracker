@@ -19,7 +19,7 @@ export const UserButton = () => {
 
   if (isLoading) {
     return (
-      <div className="size-10 rounded-full flex items-center bg-neutral-200 border border-neutral-300">
+      <div className="size-10 rounded-full flex items-center justify-center bg-neutral-200 border border-neutral-300">
         <Loader className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
@@ -61,8 +61,10 @@ export const UserButton = () => {
           className="h-10 flex items-center justify-center text-red-600 font-medium cursor-pointer"
           onClick={() => logout()}
         >
-          <LogOut className="size-4
-          " />
+          <LogOut
+            className="size-4
+          "
+          />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
