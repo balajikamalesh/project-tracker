@@ -3,6 +3,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+import { z } from "zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+
 import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +19,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
 

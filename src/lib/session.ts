@@ -11,9 +11,9 @@ import {
     type Storage as StorageType,
     type Users as UsersType,
 } from "node-appwrite";
-
 import { getCookie } from "hono/cookie";
-import { createFactory, createMiddleware } from "hono/factory";
+import { createMiddleware } from "hono/factory";
+
 import { AUTH_COOKIE_NAME } from "@/features/auth/constants";
 
 // Define the context type for the session middleware

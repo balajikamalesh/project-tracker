@@ -1,6 +1,6 @@
 import "server-only";
 
-import { Client, Databases, Account, Storage, Users } from "node-appwrite";
+import { Client, Account} from "node-appwrite";
 
 // Create and export an Appwrite client with admin privileges to create user
 export async function createAdminClient() {

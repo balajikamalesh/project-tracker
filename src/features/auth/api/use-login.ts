@@ -1,8 +1,9 @@
-import { client } from "@/lib/rpc";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferResponseType, InferRequestType} from "hono";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { InferResponseType, InferRequestType } from "hono";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { client } from "@/lib/rpc";
 
 // Using the types esported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<typeof client.api.auth.login["$post"]>;
@@ -14,16 +15,16 @@ export const useLogin = () => {
 
   return useMutation<ResponseType, unknown, RequestType>({
     mutationFn: async ({ json }) => {
-      const response = await client.api.auth.login.$post({ json});
+      const response = await client.api.auth.login.$post({ json });
       return await response.json();
     },
-    onSuccess: () => { 
+    onSuccess: () => {
       toast.success("Logged in successfully!");
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
     },
     onError: () => {
-      toast.error("Failed to log in, please check your credentials");  
+      toast.error("Failed to log in, please check your credentials");
     }
   });
 };

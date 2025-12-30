@@ -1,8 +1,9 @@
-import { client } from "@/lib/rpc";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferResponseType, InferRequestType} from "hono";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { InferResponseType } from "hono";
+import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { client } from "@/lib/rpc";
 
 // Using the types esported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
