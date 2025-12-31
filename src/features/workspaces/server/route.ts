@@ -1,3 +1,4 @@
+import z from "zod";
 import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
@@ -14,6 +15,7 @@ import {
   WORKSPACES_ID,
 } from "@/config";
 import { createWorkspaceSchema, updateWorkspaceSchema } from "../schema";
+import { Workspace } from "../types";
 
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
@@ -140,7 +142,7 @@ const app = new Hono()
         {
           name,
           userId: user.$id,
-          imageUrl: uploadedImageUrl
+          imageUrl: uploadedImageUrl,
         }
       );
 
@@ -165,13 +167,81 @@ const app = new Hono()
       return c.json({ message: "Unauthorized" }, 403);
     }
 
-    await databases.deleteDocument(
-      DATABASE_ID,
-      WORKSPACES_ID,
-      workspaceId
-    );
+    await databases.deleteDocument(DATABASE_ID, WORKSPACES_ID, workspaceId);
 
     return c.json({ data: { $id: workspaceId } });
-  });
+  })
+  .post("/:workspaceId/reset-invite-code", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const { workspaceId } = c.req.param();
+    const user = c.get("user");
+
+    // Check if the user is a member of the current workspace
+    const member = await getMember({
+      databases,
+      userId: user.$id,
+      workspaceId,
+    });
+
+    //TODO: Also delete all related documents (members, projects, and tasks)
+
+    if (!member || member.role !== MemberRole.ADMIN) {
+      return c.json({ message: "Unauthorized" }, 403);
+    }
+
+    const workspace = await databases.updateDocument(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId,
+      {
+        inviteCode: generateInviteCode(8),
+      }
+    );
+
+    return c.json({ data: workspace });
+  })
+  .post(
+    "/:workspaceId/join",
+    sessionMiddleware,
+    zValidator("json", z.object({ inviteCode: z.string() })),
+    async (c) => {
+      const { workspaceId } = c.req.param();
+      const { inviteCode } = c.req.valid("json");
+
+      const databases = c.get("databases");
+      const user = c.get("user");
+
+      // this member should not be part of the current workspace 
+      const members = await getMember({
+        databases,
+        userId: user.$id,
+        workspaceId,
+      });
+
+      if (members) {
+        return c.json({ message: "Already a member of this workspace" }, 400);
+      }
+
+      const workspace = await databases.getDocument<Workspace>(
+        DATABASE_ID,
+        WORKSPACES_ID,
+        workspaceId
+      );
+
+      // Check if the invite code matches
+      if (workspace.inviteCode !== inviteCode) {
+        return c.json({ error: "Invalid invite code" }, 400);
+      }
+
+      // Add the user as a member of the current workspace
+      await databases.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
+        userId: user.$id,
+        workspaceId: workspace.$id,
+        role: MemberRole.MEMBER,
+      });
+
+      return c.json({ data: workspace });
+    }
+  );
 
 export default app;
