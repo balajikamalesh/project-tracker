@@ -1,0 +1,34 @@
+import { toast } from "sonner";
+import { InferResponseType, InferRequestType } from "hono";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { client } from "@/lib/rpc";
+import { useRouter } from "next/navigation";
+
+// Using the types exported from the RPC client to infer request and response types
+type ResponseType = InferResponseType<(typeof client.api.projects)[":projectId"]["$patch"], 200>;
+type RequestType = InferRequestType<(typeof client.api.projects)[":projectId"]["$patch"]>;
+
+export const useUpdateProject = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  return useMutation<ResponseType, unknown, RequestType>({
+    mutationFn: async ({ form, param }) => {
+      const response = await client.api.projects[":projectId"]["$patch"]({ form, param });
+      if (!response.ok) {
+        throw new Error("Failed to update project");
+      }
+      return await response.json();
+    },
+    onSuccess: ({ data }) => {
+      toast.success("Project updated successfully!");
+      router.refresh(); // to refresh the current route
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
+    },
+    onError: (error: unknown) => {
+      toast.error("Failed to update project");
+    },
+  });
+};

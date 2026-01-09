@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "antialiased min-h-screen" )}
       >
+        <NextTopLoader showSpinner={false} />
         <QueryProvider>
           <Toaster />
           {children}

@@ -67,7 +67,7 @@ export const getWorkspace = async ({ workspaceId }: { workspaceId: string }) => 
         workspaceId,
     }); 
 
-    if(!member) return null;
+    if(!member) throw new Error("Unauthorized");
 
     const workspace = await databases.getDocument<Workspace>(
         DATABASE_ID,
