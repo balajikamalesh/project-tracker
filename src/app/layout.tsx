@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "antialiased min-h-screen" )}
       >
-        <NextTopLoader showSpinner={false} />
+        <NextTopLoader height={2} showSpinner={false} />
         <QueryProvider>
           <Toaster />
           {children}

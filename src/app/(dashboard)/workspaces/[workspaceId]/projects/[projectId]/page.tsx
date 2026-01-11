@@ -7,6 +7,7 @@ import { Loader, PencilIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCurrent } from "@/features/auth/actions";
 import { getProject } from "@/features/projects/actions";
+import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 
 interface ProjectsIdPageProps {
   params: {
@@ -37,12 +38,13 @@ const ProjectsIdPage = async ({ params }: ProjectsIdPageProps) => {
                 <Link
                   href={`/workspaces/${project.workspaceId}/projects/${project.$id}/settings`}
                 >
-                  <PencilIcon className="size-4 mr-2"/>
+                  <PencilIcon className="size-4 mr-2" />
                   Edit Project
                 </Link>
               </Button>
             </div>
           </div>
+          <TaskViewSwitcher />
         </div>
       ) : (
         <Loader className="animate-spin" />
