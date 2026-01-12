@@ -6,7 +6,7 @@ import { createTaskSchema } from "../schema";
 import { getMember } from "@/features/members/utils";
 import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
-import { TaskStatus } from "../types";
+import { Task, TaskStatus } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 
 const app = new Hono()
@@ -44,7 +44,7 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" }, 401);
       }
 
-      const tasks = await databases.listDocuments(DATABASE_ID, TASKS_ID, [
+      const tasks = await databases.listDocuments<Task>(DATABASE_ID, TASKS_ID, [
         Query.equal("workspaceId", workspaceId),
         ...(status ? [Query.equal("status", status)] : []),
         ...(dueDate && dueDate !== "null" ? [Query.equal("dueDate", dueDate)] : []),
@@ -54,8 +54,8 @@ const app = new Hono()
         Query.orderAsc("position"),
       ]);
 
-      const projectIds = tasks.documents.map((task) => task.projectId);
-      const assigneeIds = tasks.documents.map((task) => task.assigneeId);
+      const projectIds = tasks.documents.map((task) => task.projectId || "").filter((id) => id !== "");
+      const assigneeIds = tasks.documents.map((task) => task.assigneeId || "").filter((id) => id !== "");
 
       const projects = await databases.listDocuments(
         DATABASE_ID,
