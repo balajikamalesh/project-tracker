@@ -12,6 +12,7 @@ import DataFilters from "./data-filters";
 import { useTasksFilters } from "../hooks/use-tasks-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import DataKanban from "./data-kanban";
 
 type Props = {};
 
@@ -73,7 +74,7 @@ const TaskViewSwitcher = (props: Props) => {
               <DataTable columns={columns} data={tasks?.documents ?? []}/>
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              Kanban View Content {JSON.stringify(tasks, null, 2)}
+              <DataKanban data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               Calendar View Content {JSON.stringify(tasks, null, 2)}

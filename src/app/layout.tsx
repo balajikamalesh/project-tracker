@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Trackly",
+  title: "Trackly  |  Dashboard",
   description: "A project management tool to track your tasks efficiently.",
 };
 

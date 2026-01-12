@@ -37,6 +37,7 @@ interface CreateTaskFormProps {
   onCancel?: () => void;
   projectOptions: { id: string; name: string; imageUrl: string }[];
   memberOptions: { id: string; name: string }[];
+  initialStatus?: TaskStatus | null;
 }
 
 const createTaskFormSchema = createTaskSchema.omit({ workspaceId: true });
@@ -46,6 +47,7 @@ export const CreateTaskForm = ({
   onCancel,
   projectOptions,
   memberOptions,
+  initialStatus,
 }: CreateTaskFormProps) => {
   const workspaceId = useWorkspaceId();
   const router = useRouter();
@@ -58,7 +60,7 @@ export const CreateTaskForm = ({
       description: "",
       dueDate: undefined,
       assigneeId: "",
-      status: TaskStatus.IN_PROGRESS,
+      status: initialStatus || TaskStatus.IN_PROGRESS,
       projectId: "",
     },
   });

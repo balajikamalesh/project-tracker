@@ -5,12 +5,14 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { Loader } from "lucide-react";
 import React from "react";
 import { CreateTaskForm } from "./create-task-form";
+import { TaskStatus } from "../types";
 
 type Props = {
   onCancel?: () => void;
+  initialStatus?: TaskStatus | null;
 };
 
-const CreateTaskFormWrapper = ({ onCancel }: Props) => {
+const CreateTaskFormWrapper = ({ onCancel, initialStatus }: Props) => {
   const workspaceId = useWorkspaceId();
 
   const { data: projects, isLoading: isLoadingProjects } = useGetProjects({
@@ -52,6 +54,7 @@ const CreateTaskFormWrapper = ({ onCancel }: Props) => {
             onCancel={onCancel} 
             projectOptions={projectOptions}
             memberOptions={memberOptions}
+            initialStatus={initialStatus}
             />
     </div>
   );
