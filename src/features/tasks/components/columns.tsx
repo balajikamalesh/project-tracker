@@ -101,10 +101,10 @@ export const columns: ColumnDef<Task>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const id = row.original.id;
-      const projectId = row.original.project.id;
+      const id = row.original.$id;
+      const projectId = row.original.projectId;
       return (
-        <TaskActions id={id} projectId={projectId}>
+        <TaskActions id={id} projectId={projectId!}>
           <Button variant="ghost" className="size-8 p-0">
             <MoreVerticalIcon strokeWidth={1}/>
           </Button>
