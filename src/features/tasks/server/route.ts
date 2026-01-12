@@ -47,15 +47,25 @@ const app = new Hono()
       const tasks = await databases.listDocuments<Task>(DATABASE_ID, TASKS_ID, [
         Query.equal("workspaceId", workspaceId),
         ...(status ? [Query.equal("status", status)] : []),
-        ...(dueDate && dueDate !== "null" ? [Query.equal("dueDate", dueDate)] : []),
-        ...(projectId && projectId !== "null" ? [Query.equal("projectId", projectId)] : []),
-        ...(assigneeId && assigneeId !== "null" ? [Query.equal("assigneeId", assigneeId)] : []),
+        ...(dueDate && dueDate !== "null"
+          ? [Query.equal("dueDate", dueDate)]
+          : []),
+        ...(projectId && projectId !== "null"
+          ? [Query.equal("projectId", projectId)]
+          : []),
+        ...(assigneeId && assigneeId !== "null"
+          ? [Query.equal("assigneeId", assigneeId)]
+          : []),
         ...(search ? [Query.contains("name", search)] : []),
         Query.orderAsc("position"),
       ]);
 
-      const projectIds = tasks.documents.map((task) => task.projectId || "").filter((id) => id !== "");
-      const assigneeIds = tasks.documents.map((task) => task.assigneeId || "").filter((id) => id !== "");
+      const projectIds = tasks.documents
+        .map((task) => task.projectId || "")
+        .filter((id) => id !== "");
+      const assigneeIds = tasks.documents
+        .map((task) => task.assigneeId || "")
+        .filter((id) => id !== "");
 
       const projects = await databases.listDocuments(
         DATABASE_ID,
@@ -157,6 +167,33 @@ const app = new Hono()
 
       return c.json({ data: task });
     }
-  );
+  )
+  .delete("/:taskId", sessionMiddleware, async (c) => {
+    const { taskId } = c.req.param();
+    const databases = c.get("databases");
+    const user = c.get("user");
+
+    console.log("Deleting task:", taskId);
+
+    const task = await databases.getDocument<Task>(
+      DATABASE_ID,
+      TASKS_ID,
+      taskId
+    );
+
+    const member = await getMember({
+      databases,
+      workspaceId: task.workspaceId,
+      userId: user.$id,
+    });
+
+    if (!member) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
+
+    return c.json({ data: task });
+  });
 
 export default app;

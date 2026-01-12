@@ -61,7 +61,7 @@ export const useConfirm = ({
               Cancel
             </Button>
             <Button
-              variant="destructive"
+              variant={variant}
               onClick={handleConfirm}
               className="w-full lg:w-auto"
             >

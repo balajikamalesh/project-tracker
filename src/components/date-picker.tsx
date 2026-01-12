@@ -1,6 +1,6 @@
 import { useState} from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface DatePickerProps {
   value: Date | undefined;
-  onChange: (date: Date) => void;
+  onChange: (date: Date | undefined) => void;
   className?: string;
   placeholder?: string;
 }
@@ -36,6 +36,15 @@ const DatePicker = ({
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {value ? format(value, "PPP") : <span>{placeholder}</span>}
+          {value && (
+            <X
+              className="ml-auto h-4 w-4 opacity-50 hover:opacity-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                onChange(undefined);
+              }}
+            />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
