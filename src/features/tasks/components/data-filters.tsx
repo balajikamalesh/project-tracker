@@ -57,12 +57,12 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-2">
+    <div className="flex flex-col lg:flex-row gap-2 lg:h-12 bg-neutral-50 items-center p-2 rounded-md">
       <Select
         defaultValue={status ?? undefined}
         onValueChange={onValueChange("status")}
       >
-        <SelectTrigger className="w-full lg:w-auto h-8">
+        <SelectTrigger className="w-full lg:w-auto h-8 bg-white">
           <div className="flex items-center pr-2">
             <ListCheckIcon className="size-4 mr-2" />
             <SelectValue placeholder="All statuses" />
@@ -84,14 +84,14 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
         defaultValue={assigneeId ?? undefined}
         onValueChange={onValueChange("assigneeId")}
       >
-        <SelectTrigger className="w-full lg:w-auto h-8">
+        <SelectTrigger className="w-full lg:w-auto h-8 bg-white">
           <div className="flex items-center pr-2">
             <UserIcon className="size-4 mr-2" />
             <SelectValue placeholder="Select assignee" />
           </div>
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All statuses</SelectItem>
+          <SelectItem value="all">All assignees</SelectItem>
           <SelectSeparator />
           {memberOptions.map((member) => (
             <SelectItem key={member.value} value={member.value}>
@@ -106,7 +106,7 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
           defaultValue={projectId ?? undefined}
           onValueChange={onValueChange("projectId")}
         >
-          <SelectTrigger className="w-full lg:w-auto h-8">
+          <SelectTrigger className="w-full lg:w-auto h-8 bg-white">
             <div className="flex items-center pr-2">
               <FolderIcon className="size-4 mr-2" />
               <SelectValue placeholder="Select project" />
@@ -125,7 +125,7 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
       )}
       <DatePicker
         placeholder="Due Date"
-        className="h-8 w-full lg:w-auto"
+        className="h-8 w-full lg:w-auto bg-white"
         value={dueDate ? new Date(dueDate) : undefined}
         onChange={(date) =>
           setFilters({ dueDate: date ? date.toISOString() : null })

@@ -26,9 +26,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useCreateTask } from "../api/use-create-task";
+import { DescriptionAutocomplete } from "./description-autocomplete";
 import { createTaskSchema } from "../schema";
 import { TaskStatus } from "../types";
 
@@ -107,8 +107,16 @@ export const CreateTaskForm = ({
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        {...field} 
+                      <DescriptionAutocomplete
+                        value={field.value}
+                        onChange={field.onChange}
+                        taskName={form.watch("name")}
+                        projectName={
+                          projectOptions.find(
+                            (p) => p.id === form.watch("projectId")
+                          )?.name
+                        }
+                        disabled={isPending}
                         placeholder="Enter task description"
                         rows={4}
                       />

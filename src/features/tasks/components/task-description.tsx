@@ -60,7 +60,7 @@ const TaskDescription = ({ task }: Props) => {
           </Button>
         </div>
       ) : (
-        <div>
+        <div className="whitespace-break-spaces">
           {task.description || (
             <span className="text-muted-foreground">
               No description provided.

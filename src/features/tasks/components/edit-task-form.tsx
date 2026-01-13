@@ -26,9 +26,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useUpdateTask } from "../api/use-update-tasks";
+import { DescriptionAutocomplete } from "./description-autocomplete";
 import { createTaskSchema } from "../schema";
 import { Task, TaskStatus } from "../types";
 
@@ -41,7 +41,6 @@ interface EditTaskFormProps {
 
 const editTaskFormSchema = createTaskSchema.omit({
   workspaceId: true,
-  description: true,
 });
 type EditTaskFormInput = z.infer<typeof editTaskFormSchema>;
 
@@ -106,8 +105,16 @@ export const EditTaskForm = ({
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea
-                        {...field}
+                      <DescriptionAutocomplete
+                        value={field.value}
+                        onChange={field.onChange}
+                        taskName={form.watch("name")}
+                        projectName={
+                          projectOptions.find(
+                            (p) => p.id === form.watch("projectId")
+                          )?.name
+                        }
+                        disabled={isPending}
                         placeholder="Enter task description"
                         rows={4}
                       />
