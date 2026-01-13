@@ -1,9 +1,9 @@
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { InferResponseType, InferRequestType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 // Using the types exported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<(typeof client.api.tasks)["bulk-update"]["$post"], 200>;

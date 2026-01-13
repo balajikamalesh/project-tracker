@@ -1,13 +1,14 @@
 import z from "zod";
-import { zValidator } from "@hono/zod-validator";
-import { sessionMiddleware } from "@/lib/session";
 import { Hono } from "hono";
-import { createTaskSchema } from "../schema";
-import { getMember } from "@/features/members/utils";
-import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
-import { Task, TaskStatus } from "../types";
+import { zValidator } from "@hono/zod-validator";
+
+import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { createAdminClient } from "@/lib/appwrite";
+import { sessionMiddleware } from "@/lib/session";
+import { getMember } from "@/features/members/utils";
+import { createTaskSchema } from "../schema";
+import { Task, TaskStatus } from "../types";
 
 const app = new Hono()
   .get(
@@ -30,8 +31,6 @@ const app = new Hono()
 
       const { workspaceId, projectId, status, assigneeId, dueDate } =
         c.req.valid("query");
-
-      console.log(workspaceId, projectId, status, assigneeId, dueDate);
 
       const member = await getMember({
         databases,
@@ -63,8 +62,6 @@ const app = new Hono()
       if (dueDate && dueDate !== "null") {
         query.push(Query.equal("dueDate", dueDate));
       }
-
-      console.log("Query:", query);
 
       const tasks = await databases.listDocuments<Task>(
         DATABASE_ID,
@@ -280,8 +277,6 @@ const app = new Hono()
     const databases = c.get("databases");
     const user = c.get("user");
 
-    console.log("Deleting task:", taskId);
-
     const task = await databases.getDocument<Task>(
       DATABASE_ID,
       TASKS_ID,
@@ -374,7 +369,6 @@ const app = new Hono()
       );
 
       return c.json({ data: updatedTasks });
-
     }
   );
 

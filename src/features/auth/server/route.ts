@@ -5,8 +5,8 @@ import { deleteCookie, setCookie } from "hono/cookie";
 
 import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session";
-import { signInSchema, signUpSchema } from "../schema";
 import { AUTH_COOKIE_NAME } from "../constants";
+import { signInSchema, signUpSchema } from "../schema";
 
 const loginvalidator = zValidator("json", signInSchema);
 const registerValidator = zValidator("json", signUpSchema);

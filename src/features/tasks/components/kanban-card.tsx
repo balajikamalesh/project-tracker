@@ -1,12 +1,12 @@
 import React from "react";
 import { MoreHorizontal } from "lucide-react";
+import { GoProjectRoadmap } from "react-icons/go";
 
-import { Task } from "../types";
-import { TaskActions } from "./task-actions";
 import DottedSeparator from "@/components/dotted-separator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { TaskDate } from "./task-date";
-import { GoProjectRoadmap } from "react-icons/go";
+import { TaskActions } from "./task-actions";
+import { Task } from "../types";
 
 type Props = {
   task: Task;

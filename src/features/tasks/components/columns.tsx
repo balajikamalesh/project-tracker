@@ -2,12 +2,13 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreVertical, MoreVerticalIcon } from "lucide-react";
-import { Task } from "../types";
-import { Button } from "@/components/ui/button";
-import { TaskDate } from "./task-date";
-import { Badge } from "@/components/ui/badge";
+
 import { snakeCaseToTitleCase } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { TaskActions } from "./task-actions";
+import { TaskDate } from "./task-date";
+import { Task } from "../types";
 
 export const columns: ColumnDef<Task>[] = [
   {

@@ -3,10 +3,6 @@
 import { useRouter } from "next/navigation";
 import { RiAddCircleFill } from "react-icons/ri";
 
-import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
-
 import {
   Select,
   SelectContent,
@@ -14,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useCreateWorkspaceModal } from "@/features/workspaces/hooks/use-create-workspace-modal";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
 const WorkspaceSwitcher = () => {

@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google';
 import NextTopLoader from 'nextjs-toploader';
 
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/components/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 

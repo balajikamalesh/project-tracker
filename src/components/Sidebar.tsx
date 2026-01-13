@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import Projects from "./projects";
-import { Navigation } from "./navigation";
 import DottedSeparator from "./dotted-separator";
+import { Navigation } from "./navigation";
+import Projects from "./projects";
 import WorkspaceSwitcher from "./workspace-switcher";
 
 const Sidebar = () => {

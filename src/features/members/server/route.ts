@@ -1,13 +1,13 @@
 import z from "zod";
 import { Hono } from "hono";
+import { Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 
-import { sessionMiddleware } from "@/lib/session";
-import { createAdminClient } from "@/lib/appwrite";
-import { getMember } from "../utils";
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
-import { Query } from "node-appwrite";
+import { createAdminClient } from "@/lib/appwrite";
+import { sessionMiddleware } from "@/lib/session";
 import { MemberRole } from "../types";
+import { getMember } from "../utils";
 
 // Fetch members of a workspace
 const app = new Hono()

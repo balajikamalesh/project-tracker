@@ -1,13 +1,11 @@
 "use client";
 
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-
 import { z } from "zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
@@ -19,8 +17,8 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { signUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
+import { signUpSchema } from "../schema";
 
 // Extend the schema to include confirmPassword and match check
 const signUpWithConfirmSchema = signUpSchema

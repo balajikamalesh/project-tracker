@@ -8,9 +8,9 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 
-import { Task, TaskStatus } from "../types";
-import KanbanColumnHeader from "./kanban-column-header";
 import KanbanCard from "./kanban-card";
+import KanbanColumnHeader from "./kanban-column-header";
+import { Task, TaskStatus } from "../types";
 
 const lanes: TaskStatus[] = [
   TaskStatus.BACKLOG,

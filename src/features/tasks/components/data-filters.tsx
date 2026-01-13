@@ -1,7 +1,7 @@
 import React from "react";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { useGetProjects } from "@/features/projects/api/use-get-projects";
-import { useGetMembers } from "@/features/members/api/use-get-member";
+import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
+
+import DatePicker from "@/components/date-picker";
 import {
   Select,
   SelectContent,
@@ -10,11 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FolderIcon, ListCheckIcon, UserIcon } from "lucide-react";
-import { TaskStatus } from "../types";
-import { useTasksFilters } from "../hooks/use-tasks-filters";
 import { Skeleton } from "@/components/ui/skeleton";
-import DatePicker from "@/components/date-picker";
+import { useGetMembers } from "@/features/members/api/use-get-member";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useTasksFilters } from "../hooks/use-tasks-filters";
+import { TaskStatus } from "../types";
 
 type DataFilterProps = {
   hideProjectFilter?: boolean;

@@ -1,8 +1,8 @@
 import { useMedia } from "react-use";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Drawer, DrawerContent } from "./ui/drawer";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface ResponsiveModalProps {
   isOpen: boolean;

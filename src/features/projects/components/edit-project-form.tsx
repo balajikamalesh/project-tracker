@@ -1,19 +1,20 @@
 "use client";
 
+import { use, useRef } from "react";
 import z from "zod";
+import Image from "next/image";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ImageIcon } from "lucide-react";
 
-import { updateProjectSchema } from "../schema";
-import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
-
+import { cn } from "@/lib/utils";
+import { useConfirm } from "@/hooks/use-confirm";
 import DottedSeparator from "@/components/dotted-separator";
-import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { use, useRef } from "react";
+import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -21,13 +22,11 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import Image from "next/image";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useConfirm } from "@/hooks/use-confirm";
-import { cn } from "@/lib/utils";
-import { Project } from "../types";
-import { useUpdateProject } from "../api/use-update-projects";
+import { Input } from "@/components/ui/input";
 import { useDeleteProject } from "../api/use-delete-projects";
+import { useUpdateProject } from "../api/use-update-projects";
+import { updateProjectSchema } from "../schema";
+import { Project } from "../types";
 
 interface EditProjectFormProps {
   onCancel?: () => void;

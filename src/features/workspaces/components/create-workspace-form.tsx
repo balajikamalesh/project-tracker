@@ -1,12 +1,17 @@
 "use client";
 
+import { useRef } from "react";
 import z from "zod";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ImageIcon } from "lucide-react";
 
-import { createWorkspaceSchema } from "../schema";
-import { useCreateWorkspace } from "../api/use-create-workspace";
+import { cn } from "@/lib/utils";
+import DottedSeparator from "@/components/dotted-separator";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardTitle,
@@ -14,11 +19,6 @@ import {
   CardHeader,
   CardFooter,
 } from "@/components/ui/card";
-
-import DottedSeparator from "@/components/dotted-separator";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useRef } from "react";
 import {
   Form,
   FormControl,
@@ -26,11 +26,9 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import Image from "next/image";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ImageIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { on } from "events";
+import { Input } from "@/components/ui/input";
+import { useCreateWorkspace } from "../api/use-create-workspace";
+import { createWorkspaceSchema } from "../schema";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;

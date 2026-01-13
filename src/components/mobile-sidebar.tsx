@@ -1,8 +1,8 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { MenuIcon } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";

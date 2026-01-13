@@ -1,20 +1,21 @@
 "use client";
 
+import { useCallback } from "react";
 import { Loader, PlusIcon } from "lucide-react";
+import { useQueryState } from "nuqs";
+
 import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useCreateTaskModal } from "../hooks/use-create-task-modal";
-import { useGetTasks } from "../api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { useQueryState } from "nuqs";
-import DataFilters from "./data-filters";
-import { useTasksFilters } from "../hooks/use-tasks-filters";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
-import DataKanban from "./data-kanban";
-import { useCallback } from "react";
 import { useBulkUpdatesTasks } from "../api/use-bulk-update-tasks";
+import { useGetTasks } from "../api/use-get-tasks";
+import { useCreateTaskModal } from "../hooks/use-create-task-modal";
+import { useTasksFilters } from "../hooks/use-tasks-filters";
+import { columns } from "./columns";
+import DataFilters from "./data-filters";
+import DataKanban from "./data-kanban";
+import { DataTable } from "./data-table";
 
 type Props = {};
 
@@ -58,9 +59,6 @@ const TaskViewSwitcher = (props: Props) => {
             <TabsTrigger className="h-8 w-full lg:w-auto" value="kanban">
               Kanban
             </TabsTrigger>
-            <TabsTrigger className="h-8 w-full lg:w-auto" value="calendar">
-              Calendar
-            </TabsTrigger>
           </TabsList>
           <Button
             variant="teritary"
@@ -89,9 +87,6 @@ const TaskViewSwitcher = (props: Props) => {
                 onChange={onKanbanChange}
                 data={tasks?.documents ?? []}
               />
-            </TabsContent>
-            <TabsContent value="calendar" className="mt-0">
-              Calendar View Content {JSON.stringify(tasks, null, 2)}
             </TabsContent>
           </>
         )}

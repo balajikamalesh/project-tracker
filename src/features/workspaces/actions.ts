@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { Account, Client, Databases, Query } from "node-appwrite";
-import { AUTH_COOKIE_NAME } from "@/features/auth/constants";
+
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
+import { AUTH_COOKIE_NAME } from "@/features/auth/constants";
 import { getMember } from "../members/utils";
 import { Workspace } from "./types";
 

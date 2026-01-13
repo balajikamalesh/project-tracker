@@ -1,19 +1,20 @@
 "use client";
 
+import { useRef } from "react";
 import z from "zod";
+import Image from "next/image";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, CopyIcon, ImageIcon } from "lucide-react";
 
-import { updateWorkspaceSchema } from "../schema";
-import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
-
+import { cn } from "@/lib/utils";
+import { useConfirm } from "@/hooks/use-confirm";
 import DottedSeparator from "@/components/dotted-separator";
-import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
+import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -21,14 +22,12 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import Image from "next/image";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useConfirm } from "@/hooks/use-confirm";
-import { cn } from "@/lib/utils";
-import { Workspace } from "../types";
-import { useUpdateWorkspace } from "../api/use-update-workspace";
+import { Input } from "@/components/ui/input";
 import { useDeleteWorkspace } from "../api/use-delete-workspace";
 import { useResetInviteCode } from "../api/use-reset-invite-code";
+import { useUpdateWorkspace } from "../api/use-update-workspace";
+import { updateWorkspaceSchema } from "../schema";
+import { Workspace } from "../types";
 
 interface EditWorkspaceFormProps {
   onCancel?: () => void;

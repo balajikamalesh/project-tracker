@@ -3,10 +3,10 @@ import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 
-import { createProjectSchema, updateProjectSchema } from "../schema";
-import { getMember } from "@/features/members/utils";
-import { sessionMiddleware } from "@/lib/session";
 import { DATABASE_ID, IMAGES_BUCKET_ID, PROJECTS_ID } from "@/config";
+import { sessionMiddleware } from "@/lib/session";
+import { getMember } from "@/features/members/utils";
+import { createProjectSchema, updateProjectSchema } from "../schema";
 import { Project } from "../types";
 
 const app = new Hono()

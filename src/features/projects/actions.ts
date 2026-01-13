@@ -1,9 +1,10 @@
-import { Account, Client, Databases } from "node-appwrite";
-import { DATABASE_ID, PROJECTS_ID } from "@/config";
-import { Project } from "./types";
-import { getMember } from "../members/utils";
 import { cookies } from "next/headers";
+import { Account, Client, Databases } from "node-appwrite";
+
+import { DATABASE_ID, PROJECTS_ID } from "@/config";
 import { AUTH_COOKIE_NAME } from "../auth/constants";
+import { getMember } from "../members/utils";
+import { Project } from "./types";
 
 // Fetches a specific project by ID
 export const getProject = async ({ projectId }: { projectId: string }) => {
