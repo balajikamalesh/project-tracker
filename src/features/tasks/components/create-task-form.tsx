@@ -66,7 +66,6 @@ export const CreateTaskForm = ({
   });
 
   const onSubmit = (data: CreateTaskFormInput) => {
-    debugger;
     mutate(
       { json: { ...data, workspaceId } },
       {

@@ -65,7 +65,6 @@ export const EditTaskForm = ({
   });
 
   const onSubmit = (data: EditTaskFormInput) => {
-    debugger;
     mutate(
       { json: data, param: { taskId: initialValues?.$id || "" } },
       {

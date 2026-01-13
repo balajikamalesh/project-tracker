@@ -19,8 +19,7 @@ const app = new Hono()
         workspaceId: z.string(),
         projectId: z.string().nullish(),
         assigneeId: z.string().nullish(),
-        status: z.nativeEnum(TaskStatus).nullish(),
-        search: z.string().nullish(),
+        status: z.string().nullish(),
         dueDate: z.string().nullish(),
       })
     ),
@@ -29,10 +28,10 @@ const app = new Hono()
       const user = c.get("user");
       const { users } = await createAdminClient();
 
-      const { workspaceId, projectId, status, search, assigneeId, dueDate } =
+      const { workspaceId, projectId, status, assigneeId, dueDate } =
         c.req.valid("query");
 
-      console.log(workspaceId, projectId, status, search, assigneeId, dueDate);
+      console.log(workspaceId, projectId, status, assigneeId, dueDate);
 
       const member = await getMember({
         databases,
@@ -44,21 +43,34 @@ const app = new Hono()
         return c.json({ error: "Unauthorized" }, 401);
       }
 
-      const tasks = await databases.listDocuments<Task>(DATABASE_ID, TASKS_ID, [
+      const query = [
         Query.equal("workspaceId", workspaceId),
-        ...(status ? [Query.equal("status", status)] : []),
-        ...(dueDate && dueDate !== "null"
-          ? [Query.equal("dueDate", dueDate)]
-          : []),
-        ...(projectId && projectId !== "null"
-          ? [Query.equal("projectId", projectId)]
-          : []),
-        ...(assigneeId && assigneeId !== "null"
-          ? [Query.equal("assigneeId", assigneeId)]
-          : []),
-        ...(search ? [Query.contains("name", search)] : []),
-        Query.orderAsc("position"),
-      ]);
+        Query.orderAsc("$createdAt"),
+      ];
+
+      if (projectId && projectId !== "null") {
+        query.push(Query.equal("projectId", projectId));
+      }
+
+      if (assigneeId && assigneeId !== "null") {
+        query.push(Query.equal("assigneeId", assigneeId));
+      }
+
+      if (status && status !== "null") {
+        query.push(Query.equal("status", status));
+      }
+
+      if (dueDate && dueDate !== "null") {
+        query.push(Query.equal("dueDate", dueDate));
+      }
+
+      console.log("Query:", query);
+
+      const tasks = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        query
+      );
 
       const projectIds = tasks.documents
         .map((task) => task.projectId || "")
@@ -289,6 +301,81 @@ const app = new Hono()
     await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
 
     return c.json({ data: task });
-  });
+  })
+  .post(
+    "/bulk-update",
+    sessionMiddleware,
+    zValidator(
+      "json",
+      z.object({
+        tasks: z.array(
+          z.object({
+            $id: z.string(),
+            status: z.string(),
+            position: z.number().int().positive().min(1000),
+          })
+        ),
+      })
+    ),
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+      const { tasks } = c.req.valid("json");
+
+      if (tasks.length === 0) {
+        return c.json({ error: "No tasks to update" }, 400);
+      }
+
+      // Verify user authorization for the first task's workspace
+      const tasksToUpdate = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        [
+          Query.contains(
+            "$id",
+            tasks.map((t) => t.$id)
+          ),
+        ]
+      );
+
+      const workspaceIds = new Set(
+        tasksToUpdate.documents.map((task) => task.workspaceId)
+      );
+
+      if (workspaceIds.size > 1) {
+        return c.json(
+          {
+            error:
+              "Updating Tasks belong to multiple workspaces at the same time is not allowed",
+          },
+          400
+        );
+      }
+
+      const workspaceId = workspaceIds.values().next().value!;
+
+      const member = await getMember({
+        databases,
+        workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const updatedTasks = await Promise.all(
+        tasks.map(async (task) =>
+          databases.updateDocument(DATABASE_ID, TASKS_ID, task.$id, {
+            status: task.status,
+            position: task.position,
+          })
+        )
+      );
+
+      return c.json({ data: updatedTasks });
+
+    }
+  );
 
 export default app;
