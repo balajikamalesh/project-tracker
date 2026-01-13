@@ -187,6 +187,30 @@ const app = new Hono()
     await databases.deleteDocument(DATABASE_ID, PROJECTS_ID, projectId);
 
     return c.json({ data: { $id: existingProject.$id } });
+  })
+  .get("/:projectId", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const { projectId } = c.req.param();
+    const user = c.get("user");
+
+    const existingProject = await databases.getDocument<Project>(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId
+    );
+
+    // Check if the user is a member of the current workspace
+    const member = await getMember({
+      databases,
+      userId: user.$id,
+      workspaceId: existingProject.workspaceId,
+    });
+
+    if (!member) {
+      return c.json({ message: "Unauthorized" }, 403);
+    }
+
+    return c.json({ data: existingProject });
   });
 
 export default app;

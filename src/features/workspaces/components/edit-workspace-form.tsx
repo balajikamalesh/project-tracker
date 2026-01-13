@@ -76,11 +76,6 @@ export const EditWorkspaceForm = ({
     deleteWorkspace(
       {
         param: { workspaceId: initialValues.$id },
-      },
-      {
-        onSuccess: () => {
-          router.push("/");
-        },
       }
     );
   };
@@ -102,12 +97,7 @@ export const EditWorkspaceForm = ({
 
     mutate({ 
       form: finalObj, 
-      param: { workspaceId: initialValues.$id } },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-      }
+      param: { workspaceId: initialValues.$id } }
     );
   };
 

@@ -46,39 +46,6 @@ export const getWorkspaces = async () => {
     return workspaces;
 };
 
-// Fetches a specific workspace by ID if the current user is a member
-export const getWorkspace = async ({ workspaceId }: { workspaceId: string }) => {
-    const client = new Client()
-        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
-
-    const session = cookies().get(AUTH_COOKIE_NAME);
-    if (!session) return null;
-
-    // Set the session on the client before accessing the user
-    client.setSession(session.value);
-
-    const databases = new Databases(client);
-    const account = new Account(client);
-    const user = await account.get();
-
-    const member  = await getMember({
-        databases,
-        userId: user.$id,
-        workspaceId,
-    }); 
-
-    if(!member) throw new Error("Unauthorized");
-
-    const workspace = await databases.getDocument<Workspace>(
-        DATABASE_ID,
-        WORKSPACES_ID,
-        workspaceId
-    );
-
-    return workspace;
-};
-
 // Fetches a specific workspace by ID without checking membership
 export const getWorkspaceInfo = async ({ workspaceId }: { workspaceId: string }) => {
     const client = new Client()

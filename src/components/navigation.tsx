@@ -47,8 +47,8 @@ export const Navigation = () => {
   return (
     <div className="flex flex-col">
       {routes.map((route) => {
-        const href = `/workspaces/${workspaceId}${route.href}`;
-        const isActive = false;
+        const href = `/workspaces/${workspaceId}${route.href === "/" ? "" : route.href}`;
+        const isActive = pathname === href;
         const Icon = isActive ? route.activeIcon : route.icon;
 
         return (

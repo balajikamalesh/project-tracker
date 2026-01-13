@@ -16,6 +16,7 @@ import { columns } from "./columns";
 import DataFilters from "./data-filters";
 import DataKanban from "./data-kanban";
 import { DataTable } from "./data-table";
+import UseProjectId from "@/features/projects/hooks/use-project-id";
 
 type Props = {
   hideProjectFilter?: boolean;
@@ -26,13 +27,15 @@ const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
   const { open } = useCreateTaskModal();
   const { mutate: bulkUpdate } = useBulkUpdatesTasks();
 
+  const currentProjectId = UseProjectId();
+
   const [{ status, projectId, assigneeId, search, dueDate }, setFilters] =
     useTasksFilters();
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
     status,
-    projectId,
+    projectId: currentProjectId ?? projectId,
     assigneeId,
     dueDate,
   });

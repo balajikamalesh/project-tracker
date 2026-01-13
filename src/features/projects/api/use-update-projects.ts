@@ -3,14 +3,12 @@ import { InferResponseType, InferRequestType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 // Using the types exported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<(typeof client.api.projects)[":projectId"]["$patch"], 200>;
 type RequestType = InferRequestType<(typeof client.api.projects)[":projectId"]["$patch"]>;
 
 export const useUpdateProject = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation<ResponseType, unknown, RequestType>({
@@ -23,7 +21,6 @@ export const useUpdateProject = () => {
     },
     onSuccess: ({ data }) => {
       toast.success("Project updated successfully!");
-      router.refresh(); // to refresh the current route
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({ queryKey: ["project", data.$id] });
     },
