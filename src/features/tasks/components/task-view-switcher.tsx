@@ -17,9 +17,11 @@ import DataFilters from "./data-filters";
 import DataKanban from "./data-kanban";
 import { DataTable } from "./data-table";
 
-type Props = {};
+type Props = {
+  hideProjectFilter?: boolean;
+};
 
-const TaskViewSwitcher = (props: Props) => {
+const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
   const workspaceId = useWorkspaceId();
   const { open } = useCreateTaskModal();
   const { mutate: bulkUpdate } = useBulkUpdatesTasks();
@@ -71,7 +73,7 @@ const TaskViewSwitcher = (props: Props) => {
           </Button>
         </div>
         <DottedSeparator className="my-4" />
-        <DataFilters />
+        <DataFilters hideProjectFilter={hideProjectFilter} />
         <DottedSeparator className="my-4" />
         {isLoadingTasks ? (
           <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">

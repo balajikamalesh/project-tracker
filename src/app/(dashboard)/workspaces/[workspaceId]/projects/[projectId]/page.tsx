@@ -44,7 +44,7 @@ const ProjectsIdPage = async ({ params }: ProjectsIdPageProps) => {
               </Button>
             </div>
           </div>
-          <TaskViewSwitcher />
+          <TaskViewSwitcher hideProjectFilter/>
         </div>
       ) : (
         <Loader className="animate-spin" />
