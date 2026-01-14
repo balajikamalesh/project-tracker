@@ -41,6 +41,7 @@ interface EditTaskFormProps {
 
 const editTaskFormSchema = createTaskSchema.omit({
   workspaceId: true,
+  parentTaskId: true,
 });
 type EditTaskFormInput = z.infer<typeof editTaskFormSchema>;
 
@@ -70,6 +71,9 @@ export const EditTaskForm = ({
           form.reset();
           onCancel?.();
         },
+        onError: (error) => {
+          console.error("Failed to update task:", error);
+        },
       }
     );
   };
@@ -84,7 +88,9 @@ export const EditTaskForm = ({
       </div>
       <CardContent className="p-7">
         <Form {...form}>
-          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit, (errors) => {
+            console.error("Form validation errors:", errors);
+          })}>
             <div className="flex flex-col gap-y-4">
               <FormField
                 control={form.control}
@@ -93,8 +99,9 @@ export const EditTaskForm = ({
                   <FormItem>
                     <FormLabel>Task Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Enter project name" />
+                      <Input {...field} placeholder="Enter task name" />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -146,7 +153,7 @@ export const EditTaskForm = ({
                   <FormItem>
                     <FormLabel>Assignee</FormLabel>
                     <Select
-                      defaultValue={field.value}
+                      value={field.value}
                       onValueChange={field.onChange}
                     >
                       <FormControl>
@@ -164,6 +171,7 @@ export const EditTaskForm = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -174,12 +182,12 @@ export const EditTaskForm = ({
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <Select
-                      defaultValue={field.value}
+                      value={field.value}
                       onValueChange={field.onChange}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select assignee" />
+                          <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -202,6 +210,7 @@ export const EditTaskForm = ({
                         </SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -212,12 +221,12 @@ export const EditTaskForm = ({
                   <FormItem>
                     <FormLabel>Project</FormLabel>
                     <Select
-                      defaultValue={field.value}
+                      value={field.value}
                       onValueChange={field.onChange}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select assignee" />
+                          <SelectValue placeholder="Select project" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -230,6 +239,7 @@ export const EditTaskForm = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

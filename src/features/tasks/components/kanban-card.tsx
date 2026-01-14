@@ -1,5 +1,5 @@
 import React from "react";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Split } from "lucide-react";
 import { GoProjectRoadmap } from "react-icons/go";
 
 import DottedSeparator from "@/components/dotted-separator";
@@ -17,7 +17,7 @@ const KanbanCard = ({ task }: Props) => {
     <div className="bg-white p-2.5 mb-1.5 rounded shadow-sm space-y-3">
       <div className="flex items-start justify-between gap-x-2">
         <p className="text-sm line-clamp-2">{task.name}</p>
-        <TaskActions id={task.$id} projectId={task.projectId!}>
+        <TaskActions task={task}>
           <MoreHorizontal className="size-[18px] stroke-1 shrink-0 text-neutral-700 hover:opacity-75 transition" />
         </TaskActions>
       </div>
@@ -32,7 +32,7 @@ const KanbanCard = ({ task }: Props) => {
         <TaskDate value={task.dueDate!} className="text-xs" />
       </div>
       <div className="flex items-center gap-x-1.5">
-        <GoProjectRoadmap />
+        {task.parentTaskId ? <Split className="mr-2 h-4 w-4 text-neutral-400" /> : <GoProjectRoadmap /> }
         <span className="truncate">{task.project.name}</span>
       </div>
     </div>

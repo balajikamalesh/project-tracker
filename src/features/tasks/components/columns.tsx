@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreVertical, MoreVerticalIcon } from "lucide-react";
+import { ArrowUpDown, MoreVertical, MoreVerticalIcon, Split, SquareChartGantt } from "lucide-react";
 
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -9,10 +9,12 @@ import { Button } from "@/components/ui/button";
 import { TaskActions } from "./task-actions";
 import { TaskDate } from "./task-date";
 import { Task } from "../types";
+import Link from "next/link";
 
 export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "name",
+    maxSize: 400,
     header: ({ column }) => {
       return (
         <Button
@@ -26,7 +28,18 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const name = row.original.name;
-      return <p className="line-clamp-1">{name}</p>;
+      const isParent = !row.original.parentTaskId;
+      return (
+        <div className="flex items-center gap-y-2">
+          { isParent ? <SquareChartGantt className="mr-2 h-4 w-4 text-neutral-400" /> : <Split className="mr-2 h-4 w-4 text-neutral-400" />}
+          <Link
+          className="hover:underline hover:text-blue-500"
+          href={`/workspaces/${row.original.workspaceId}/tasks/${row.original.$id}`}
+        >
+          <p className="line-clamp-1">{name}</p>
+        </Link>
+        </div>
+      );
     },
   },
   {
@@ -46,7 +59,12 @@ export const columns: ColumnDef<Task>[] = [
       const project = row.original.project;
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <p className="line-clamp-1">{project.name}</p>
+          <Link
+            className="hover:underline hover:text-blue-500"
+            href={`/workspaces/${row.original.workspaceId}/projects/${row.original.projectId}`}
+          >
+            <p className="line-clamp-1">{project.name}</p>
+          </Link>
         </div>
       );
     },
@@ -105,12 +123,12 @@ export const columns: ColumnDef<Task>[] = [
       const id = row.original.$id;
       const projectId = row.original.projectId;
       return (
-        <TaskActions id={id} projectId={projectId!}>
+        <TaskActions task={row.original}>
           <Button variant="ghost" className="size-8 p-0">
-            <MoreVerticalIcon strokeWidth={1}/>
+            <MoreVerticalIcon strokeWidth={1} />
           </Button>
         </TaskActions>
-      )
+      );
     },
-  }
+  },
 ];

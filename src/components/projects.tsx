@@ -40,7 +40,7 @@ export const Projects = () => {
               )}
             >
               <GoProjectRoadmap />
-              <span className="truncate">{project.name}</span>
+              <span className="truncate text-sm">{project.name}</span>
             </div>
           </Link>
         );

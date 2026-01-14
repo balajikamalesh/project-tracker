@@ -2,11 +2,11 @@
 
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { EditProjectForm } from "@/features/projects/components/edit-project-form";
-import UseProjectId from "@/features/projects/hooks/use-project-id";
+import useProjectId from "@/features/projects/hooks/use-project-id";
 import { Loader } from "lucide-react";
 
 const ProjectIdSettingsClient = () => {
-  const projectId = UseProjectId();
+  const projectId = useProjectId();
   const { data: project, isLoading } = useGetProject({ projectId });
 
   if (isLoading) {

@@ -370,6 +370,57 @@ const app = new Hono()
 
       return c.json({ data: updatedTasks });
     }
+  )
+    .post(
+    "/bulk-create",
+    sessionMiddleware,
+    zValidator(
+      "json",
+      z.object({
+        tasks: z.array(
+          createTaskSchema
+        ),
+      })
+    ),
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+      const { tasks } = c.req.valid("json");
+
+      if (tasks.length === 0) {
+        return c.json({ error: "No tasks to create" }, 400);
+      }
+
+      const workspaceId = tasks[0].workspaceId;
+
+      const member = await getMember({
+        databases,
+        workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const createdTasks = await Promise.all(
+        tasks.map(async (task, index) =>
+          databases.createDocument(DATABASE_ID, TASKS_ID, ID.unique(), {
+            name: task.name,
+            status: task.status,
+            description: task.description,
+            dueDate: task.dueDate,
+            workspaceId: task.workspaceId,
+            projectId: task.projectId,
+            assigneeId: member.$id,
+            position: (index + 1) * 1000,
+            parentTaskId: task.parentTaskId
+          })
+        )
+      );
+
+      return c.json({ data: createdTasks });
+    }
   );
 
 export default app;

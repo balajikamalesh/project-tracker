@@ -2,14 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { useGetProject } from "@/features/projects/api/use-get-project";
-import UseProjectId from "@/features/projects/hooks/use-project-id";
+import useProjectId from "@/features/projects/hooks/use-project-id";
 import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 import { Loader, PencilIcon } from "lucide-react";
 import Link from "next/link";
 import { GoProjectRoadmap } from "react-icons/go";
 
 const ProjectIdClient = () => {
-  const projectId = UseProjectId();
+  const projectId = useProjectId();
   const { data: project, isLoading } = useGetProject({ projectId });
 
   if (isLoading) {

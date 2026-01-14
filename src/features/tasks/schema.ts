@@ -9,4 +9,5 @@ export const createTaskSchema = z.object({
     workspaceId: z.string().trim().min(1, "Workspace ID is required"),
     projectId: z.string().trim().min(1, "Project ID is required"),
     assigneeId: z.string().optional(),
+    parentTaskId: z.string().optional(),
 });
