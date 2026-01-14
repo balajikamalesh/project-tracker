@@ -28,7 +28,7 @@ const AnalyticsCard = ({ title, value, variant, increaseValue }: Props) => {
 
   return (
     <Card className="shadow-none border-none w-full">
-      <CardHeader>
+      <CardHeader className="px-7 py-6">
         <div className="flex items-center gap-x-2.5">
           <CardDescription className="flex items-center gap-x-2 font-medium overflow-hidden">
             <span className="truncate text-base">{title}</span>

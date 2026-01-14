@@ -171,6 +171,27 @@ const app = new Hono()
       },
     });
   })
+  .get("/:taskId/sub-tasks", sessionMiddleware, async (c) => {
+    const { taskId } = c.req.param();
+    const databases = c.get("databases");
+    const currentUser = c.get("user");
+
+    const tasks = await databases.listDocuments<Task>(DATABASE_ID, TASKS_ID, [
+      Query.equal("parentTaskId", taskId),
+    ]);
+    
+    const member = await getMember({
+      databases,
+      workspaceId: tasks.documents[0].workspaceId,
+      userId: currentUser.$id,
+    });
+
+    if (!member) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    return c.json({ data: tasks });
+  })
   .post(
     "/",
     sessionMiddleware,
@@ -371,15 +392,13 @@ const app = new Hono()
       return c.json({ data: updatedTasks });
     }
   )
-    .post(
+  .post(
     "/bulk-create",
     sessionMiddleware,
     zValidator(
       "json",
       z.object({
-        tasks: z.array(
-          createTaskSchema
-        ),
+        tasks: z.array(createTaskSchema),
       })
     ),
     async (c) => {
@@ -414,7 +433,7 @@ const app = new Hono()
             projectId: task.projectId,
             assigneeId: member.$id,
             position: (index + 1) * 1000,
-            parentTaskId: task.parentTaskId
+            parentTaskId: task.parentTaskId,
           })
         )
       );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../types";
 import { Button } from "@/components/ui/button";
-import { PencilIcon } from "lucide-react";
+import { Loader, PencilIcon, Split, SquareChartGantt } from "lucide-react";
 import DottedSeparator from "@/components/dotted-separator";
 import OverviewProperty from "./overview-property";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -9,6 +9,9 @@ import { TaskDate } from "./task-date";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useEditTaskModal } from "../hooks/use-edit-task-modal";
+import { useGetSubTasks } from "../api/use-get-sub-tasks";
+import Link from "next/link";
+import { useGetTask } from "../api/use-get-task";
 
 type Props = {
   task: Task;
@@ -16,6 +19,9 @@ type Props = {
 
 const TaskOverview = ({ task }: Props) => {
   const { open } = useEditTaskModal();
+  const { data: subTasks, isLoading } = useGetSubTasks({ taskId: task.$id });
+  const {data: parentTask, isLoading: isLoadingParentTask} = useGetTask({ taskId: task.parentTaskId! });
+
   return (
     <div className="flex flex-col gap-y-4 col-span-1">
       <div className="bg-muted rounded-lg p-4">
@@ -44,6 +50,48 @@ const TaskOverview = ({ task }: Props) => {
               {snakeCaseToTitleCase(task.status)}
             </Badge>
           </OverviewProperty>
+          {!task.parentTaskId && (
+            <OverviewProperty label="Sub tasks">
+              <div className="flex flex-col gap-2">
+                {isLoading ? (
+                  <Loader className="size-4 animate-spin" />
+                ) : (
+                  subTasks?.documents.map((subTask) => (
+                    <Link
+                      key={subTask.$id}
+                      href={`/workspaces/${task.workspaceId}/tasks/${subTask.$id}`}
+                      className="hover:underline"
+                    >
+                      <div className="flex items-center">
+                        <Split className="mr-2 size-3 text-neutral-400" />
+                        <p
+                          key={subTask.$id}
+                          className="text-sm font-medium text-muted-foreground line-clamp-1"
+                        >
+                          {subTask.name}
+                        </p>
+                      </div>
+                    </Link>
+                  ))
+                )}
+              </div>
+            </OverviewProperty>
+          )}
+          {task.parentTaskId && (
+            <OverviewProperty label="Parent Task">
+              <Link
+                href={`/workspaces/${parentTask?.workspaceId}/tasks/${parentTask?.$id}`}
+                className="hover:underline"
+              >
+                <div className="flex items-center">
+                  <SquareChartGantt className="mr-2 size-3 text-neutral-400" />
+                  <p className="text-sm font-medium text-muted-foreground line-clamp-1">
+                    {parentTask?.name}
+                  </p>
+                </div>
+              </Link>
+            </OverviewProperty>
+          )}
         </div>
       </div>
     </div>
