@@ -1,7 +1,9 @@
 "use client";
 
+import Analytics from "@/components/analytics";
 import { Button } from "@/components/ui/button";
 import { useGetProject } from "@/features/projects/api/use-get-project";
+import { useGetProjectAnalytics } from "@/features/projects/api/use-get-project-analytics";
 import useProjectId from "@/features/projects/hooks/use-project-id";
 import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 import { Loader, PencilIcon } from "lucide-react";
@@ -10,7 +12,11 @@ import { GoProjectRoadmap } from "react-icons/go";
 
 const ProjectIdClient = () => {
   const projectId = useProjectId();
-  const { data: project, isLoading } = useGetProject({ projectId });
+  const { data: project, isLoading: isProjectLoading } = useGetProject({ projectId });
+  const { data: analytics, isLoading: isAnalyticsLoading } =
+    useGetProjectAnalytics({ projectId });
+
+  const isLoading = isProjectLoading || isAnalyticsLoading;
 
   if (isLoading) {
     return (
@@ -20,7 +26,7 @@ const ProjectIdClient = () => {
     );
   }
 
-  if( !project ) {
+  if (!project) {
     return (
       <div className="h-full flex items-center justify-center">
         <p className="text-muted-foreground">Project not found.</p>
@@ -46,6 +52,7 @@ const ProjectIdClient = () => {
           </Button>
         </div>
       </div>
+      {analytics && <Analytics data={analytics} />}
       <TaskViewSwitcher hideProjectFilter />
     </div>
   );
