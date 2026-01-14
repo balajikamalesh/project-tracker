@@ -6,7 +6,10 @@ interface useGetTaskProps {
   taskId: string;
 }
 
-export const useGetTask = ({ taskId }: useGetTaskProps) => {
+export const useGetTask = (
+  { taskId }: useGetTaskProps,
+  options?: { enabled?: boolean }
+) => {
   return useQuery({
     queryKey: ["task", taskId],
     queryFn: async () => {
@@ -23,5 +26,6 @@ export const useGetTask = ({ taskId }: useGetTaskProps) => {
       const { data } = await response.json();
       return data;
     },
+    enabled: options?.enabled,
   });
 };

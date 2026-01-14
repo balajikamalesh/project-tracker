@@ -6,9 +6,10 @@ interface useGetSubTasksProps {
   taskId: string;
 }
 
-export const useGetSubTasks = ({
-  taskId,
-}: useGetSubTasksProps) => {
+export const useGetSubTasks = (
+  { taskId }: useGetSubTasksProps,
+  options?: { enabled?: boolean }
+) => {
   return useQuery({
     queryKey: ["sub-tasks", taskId],
     queryFn: async () => {
@@ -23,5 +24,6 @@ export const useGetSubTasks = ({
       const { data } = await response.json();
       return data;
     },
+    enabled: options?.enabled,
   });
 };
