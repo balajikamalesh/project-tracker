@@ -21,17 +21,11 @@ const TaskOverview = ({ task }: Props) => {
   const { open } = useEditTaskModal();
   const { data: subTasks, isLoading } = useGetSubTasks(
     { taskId: task.$id },
-    {
-      enabled: !task.parentTaskId,
-    }
+    { enabled: !task.parentTaskId }
   );
   const { data: parentTask, isLoading: isLoadingParentTask } = useGetTask(
-    {
-      taskId: task.parentTaskId!,
-    },
-    {
-      enabled: !!task.parentTaskId,
-    }
+    { taskId: task.parentTaskId! },
+    { enabled: !!task.parentTaskId }
   );
 
   return (
@@ -67,8 +61,8 @@ const TaskOverview = ({ task }: Props) => {
               <div className="flex flex-col gap-2">
                 {isLoading ? (
                   <Loader className="size-4 animate-spin" />
-                ) : subTasks?.documents ? (
-                  subTasks.documents.map((subTask) => (
+                ) : subTasks?.documents.length! > 0 ? (
+                  subTasks?.documents.map((subTask) => (
                     <Link
                       key={subTask.$id}
                       href={`/workspaces/${task.workspaceId}/tasks/${subTask.$id}`}
