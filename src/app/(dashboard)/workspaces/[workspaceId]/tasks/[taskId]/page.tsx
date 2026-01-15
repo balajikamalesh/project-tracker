@@ -3,9 +3,7 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import { TaskIdClient } from './client';
 
-type Props = {}
-
-const TaskIdPage = async (props: Props) => {
+const TaskIdPage = async () => {
     const user = await getCurrent();
     if (!user) redirect("/sign-in")
 

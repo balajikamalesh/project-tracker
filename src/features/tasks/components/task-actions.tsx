@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import { ExternalLinkIcon, PencilIcon, Split } from "lucide-react";
 
 import { useConfirm } from "@/hooks/use-confirm";

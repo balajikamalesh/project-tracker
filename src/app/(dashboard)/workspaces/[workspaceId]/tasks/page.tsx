@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { redirect } from 'next/navigation';
 
 import { getCurrent } from '@/features/auth/actions'
 import TaskViewSwitcher from '@/features/tasks/components/task-view-switcher';
 import { Metadata } from 'next';
+import { Loader } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: "Trackly  |  Tasks"
@@ -15,7 +16,13 @@ const TasksPage = async () => {
 
   return (
     <div className='h-full flex flex-col'>
-        <TaskViewSwitcher />
+        <Suspense fallback={
+          <div className="h-full flex items-center justify-center">
+            <Loader className="size-6 animate-spin text-muted-foreground" />
+          </div>
+        }>
+          <TaskViewSwitcher />
+        </Suspense>
     </div>
   )
 }

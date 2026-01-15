@@ -26,7 +26,7 @@ export const useBulkCreateTasks = () => {
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-    onError: (error: unknown) => {
+    onError: () => {
       toast.error("Failed to create tasks");
     },
   });

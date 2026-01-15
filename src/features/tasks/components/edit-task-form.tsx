@@ -2,7 +2,6 @@
 
 import z from "zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { cn } from "@/lib/utils";
@@ -26,7 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useUpdateTask } from "../api/use-update-tasks";
 import { DescriptionAutocomplete } from "./description-autocomplete";
 import { createTaskSchema } from "../schema";
@@ -51,8 +49,6 @@ export const EditTaskForm = ({
   memberOptions,
   initialValues,
 }: EditTaskFormProps) => {
-  const workspaceId = useWorkspaceId();
-  const router = useRouter();
   const { mutate, isPending } = useUpdateTask();
 
   const form = useForm<EditTaskFormInput>({
@@ -67,7 +63,7 @@ export const EditTaskForm = ({
     mutate(
       { json: data, param: { taskId: initialValues?.$id || "" } },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: () => {
           form.reset();
           onCancel?.();
         },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import React from "react";
 import { Task } from "../types";
 import { Button } from "@/components/ui/button";

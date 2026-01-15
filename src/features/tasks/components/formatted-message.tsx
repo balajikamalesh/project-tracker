@@ -8,7 +8,7 @@ const FormattedMessage = ({ content }: FormattedMessageProps) => {
     const elements: JSX.Element[] = [];
 
     lines.forEach((line, index) => {
-      let formattedLine = line;
+      const formattedLine = line;
 
       const bulletMatch = line.match(/^[\s]*[*\-•]\s+(.*)/);
       if (bulletMatch) {

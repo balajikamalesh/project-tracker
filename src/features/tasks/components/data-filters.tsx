@@ -44,11 +44,11 @@ const DataFilters = ({ hideProjectFilter }: DataFilterProps) => {
       label: member.name,
     })) || [];
 
-  const [{ status, projectId, assigneeId, search, dueDate }, setFilters] =
+  const [{ status, projectId, assigneeId, dueDate }, setFilters] =
     useTasksFilters();
 
   const onValueChange = (name: string) => (value: string) => {
-    let finalValue = name === "status" ? (value as TaskStatus) : value;
+    const finalValue = name === "status" ? (value as TaskStatus) : value;
     setFilters({ [name]: value === "all" ? null : finalValue });
   };
 

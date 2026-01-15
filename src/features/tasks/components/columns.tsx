@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreVertical, MoreVerticalIcon, Split, SquareChartGantt } from "lucide-react";
+import { ArrowUpDown, MoreVerticalIcon, Split, SquareChartGantt } from "lucide-react";
 
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -120,8 +120,6 @@ export const columns: ColumnDef<Task>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const id = row.original.$id;
-      const projectId = row.original.projectId;
       return (
         <TaskActions task={row.original}>
           <Button variant="ghost" className="size-8 p-0">

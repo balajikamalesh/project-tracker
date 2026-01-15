@@ -1,9 +1,8 @@
 "use client";
 
-import { use, useRef } from "react";
+import { useRef } from "react";
 import z from "zod";
 import Image from "next/image";
-import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -204,7 +203,7 @@ export const EditProjectForm = ({
                   size="lg"
                   variant="secondary"
                   onClick={onCancel}
-                  disabled={isPending}
+                  disabled={isDeletingProject}
                   className={cn(!onCancel && "invisible")}
                 >
                   Cancel

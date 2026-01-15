@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import DottedSeparator from "@/components/dotted-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetProject } from "@/features/projects/api/use-get-project";
@@ -9,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { useCompletion } from "@ai-sdk/react";
 import { toast } from "sonner";
 import { useBulkCreateTasks } from "../api/use-bulk-create-tasks";
-import { createTaskSchema } from "../schema";
 
 type Props = {
   onCancel?: () => void;

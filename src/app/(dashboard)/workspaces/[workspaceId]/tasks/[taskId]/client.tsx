@@ -1,7 +1,9 @@
+/* eslint-disable */
 "use client";
 
 import ErrorPage from "@/app/error";
 import DottedSeparator from "@/components/dotted-separator";
+import { Project } from "@/features/projects/types";
 import { useGetTask } from "@/features/tasks/api/use-get-task";
 import TaskBreadcrumbs from "@/features/tasks/components/task-breadcrumbs";
 import TaskDescription from "@/features/tasks/components/task-description";
@@ -27,7 +29,7 @@ export const TaskIdClient = () => {
 
   return (
     <div className="flex flex-col">
-      <TaskBreadcrumbs project={data.project} task={data} />
+      <TaskBreadcrumbs project={data.project as Project} task={data} />
       <DottedSeparator className="my-6"/>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskOverview task={data} />

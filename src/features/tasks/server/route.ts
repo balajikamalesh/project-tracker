@@ -8,7 +8,7 @@ import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session";
 import { getMember } from "@/features/members/utils";
 import { createTaskSchema } from "../schema";
-import { Task, TaskStatus } from "../types";
+import { Task } from "../types";
 
 const app = new Hono()
   .get(

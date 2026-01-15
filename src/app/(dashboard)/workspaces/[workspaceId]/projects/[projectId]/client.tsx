@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Analytics from "@/components/analytics";
 import { Button } from "@/components/ui/button";
 import { useGetProject } from "@/features/projects/api/use-get-project";
@@ -53,7 +54,13 @@ const ProjectIdClient = () => {
         </div>
       </div>
       {analytics && <Analytics data={analytics} />}
-      <TaskViewSwitcher hideProjectFilter />
+      <Suspense fallback={
+        <div className="h-full flex items-center justify-center">
+          <Loader className="size-6 animate-spin text-muted-foreground" />
+        </div>
+      }>
+        <TaskViewSwitcher hideProjectFilter />
+      </Suspense>
     </div>
   );
 };

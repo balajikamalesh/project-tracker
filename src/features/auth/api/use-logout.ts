@@ -8,7 +8,7 @@ import { client } from "@/lib/rpc";
 // Using the types esported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<typeof client.api.auth.logout["$post"]>;
 
-export const uselogout = () => {
+export const useLogout = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 

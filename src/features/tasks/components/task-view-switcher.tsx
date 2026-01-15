@@ -32,7 +32,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
   const currentProjectId = useProjectId();
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
 
-  const [{ status, projectId, assigneeId, search, dueDate }, setFilters] =
+  const [{ status, projectId, assigneeId, dueDate }] =
     useTasksFilters();
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({

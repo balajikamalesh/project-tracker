@@ -9,6 +9,7 @@ import { buildPrompt } from "@/lib/utils";
 import { sessionMiddleware } from "@/lib/session";
 import { getMember } from "@/features/members/utils";
 import { DATABASE_ID, PROJECTS_ID, TASKS_ID } from "@/config";
+import { ContextAI } from "@/app/api/ai/types";
 
 const app = new Hono().post(
   "/",
@@ -70,17 +71,17 @@ const app = new Hono().post(
       );
 
       // Build context for AI
-      const context = {
+      const context: ContextAI = {
         isWorkspaceLevel: !projectId,
         projectName: projectData?.name || null,
         projectDescription: projectData?.description || null,
         workspaceName: "workspace",
         totalTasks: tasks.total,
-        tasks: tasks.documents.map((task: any) => ({
-          name: task.name,
-          description: task.description,
-          status: task.status,
-          dueDate: task.dueDate,
+        tasks: tasks.documents.map((task: unknown) => ({
+          name: (task as { name: string }).name,
+          description: (task as { description: string }).description,
+          status: (task as { status: string }).status,
+          dueDate: (task as { dueDate: string }).dueDate,
         })),
       };
 

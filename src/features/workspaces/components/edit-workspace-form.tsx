@@ -76,6 +76,10 @@ export const EditWorkspaceForm = ({
     deleteWorkspace(
       {
         param: { workspaceId: initialValues.$id },
+      },{
+        onSuccess: () => {
+          router.push("/");
+        }
       }
     );
   };

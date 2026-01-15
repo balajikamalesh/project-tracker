@@ -28,7 +28,7 @@ export const useUpdateTask = () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
     },
-    onError: (error: unknown) => {
+    onError: () => {
       toast.error("Failed to update task");
     },
   });

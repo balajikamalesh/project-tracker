@@ -2,13 +2,9 @@
 
 import {
   CalendarIcon,
-  CircleUserRound,
   Loader,
   PlusIcon,
-  ProjectorIcon,
   Settings,
-  User,
-  UserCircle,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -32,9 +28,7 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { Member } from "@/features/members/types";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type Props = {};
-
-const WorkspaceIdClient = (props: Props) => {
+const WorkspaceIdClient = () => {
   const workspaceId = useWorkspaceId();
 
   const { data: analytics, isLoading: isLoadingAnalytics } =
@@ -48,8 +42,6 @@ const WorkspaceIdClient = (props: Props) => {
   const { data: members, isLoading: isLoadingMembers } = useGetMembers({
     workspaceId,
   });
-
-  const { open: createProjectModalOpen } = useCreateProjectModal();
 
   const isLoading =
     isLoadingAnalytics ||
@@ -99,7 +91,7 @@ export const TaskList = ({ tasks, total }: TaskListProps) => {
       <div className="bg-muted rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">Tasks ({total})</p>
-          <Button variant="muted" size="icon" onClick={createTaskModalOpen}>
+          <Button variant="muted" size="icon" onClick={() => createTaskModalOpen()}>
             <PlusIcon className="size-4 text-neutral-400" />
           </Button>
         </div>

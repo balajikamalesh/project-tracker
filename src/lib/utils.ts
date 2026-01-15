@@ -1,3 +1,5 @@
+/* eslint-disable */
+import { ContextAI } from "@/app/api/ai/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -24,7 +26,7 @@ export function snakeCaseToTitleCase(snakeCase: string): string {
 }
 
 // Build prompt with project or workspace context
-export function buildPrompt(userMessage: string, context: any): string {
+export function buildPrompt(userMessage: string, context: ContextAI): string {
   const tasksByStatus = context.tasks.reduce((acc: any, task: any) => {
     if (!acc[task.status]) acc[task.status] = [];
     acc[task.status].push(task);

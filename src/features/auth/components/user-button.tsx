@@ -3,7 +3,7 @@
 import { Loader, LogOut } from "lucide-react";
 
 import DottedSeparator from "@/components/dotted-separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCurrent } from "../api/use-current";
-import { uselogout } from "../api/use-logout";
+import { useLogout } from "../api/use-logout";
 
 export const UserButton = () => {
-  const { mutate: logout } = uselogout();
+  const { mutate: logout } = useLogout();
   const { data: currentUser, isLoading } = useCurrent();
 
   if (isLoading) {
