@@ -3,10 +3,13 @@ import { redirect } from 'next/navigation';
 
 import { getCurrent } from '@/features/auth/actions'
 import TaskViewSwitcher from '@/features/tasks/components/task-view-switcher';
+import { Metadata } from 'next';
 
-type Props = {}
+export const metadata: Metadata = {
+  title: "Trackly  |  Tasks"
+};
 
-const TasksPage = async (props: Props) => {
+const TasksPage = async () => {
     const user = await getCurrent();
     if (!user) redirect("/sign-in")
 

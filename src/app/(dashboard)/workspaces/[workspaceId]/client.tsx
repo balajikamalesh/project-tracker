@@ -108,7 +108,7 @@ export const TaskList = ({ tasks, total }: TaskListProps) => {
           {tasks.map((task) => (
             <li key={task.$id}>
               <Link href={`/workspaces/${task.workspaceId}/tasks/${task.$id}`}>
-                <Card className="shadow-none rounded-lg hover:opacity-75 transition">
+                <Card className="shadow-md rounded-lg hover:opacity-75 transition">
                   <CardContent className="p-4">
                     <p className="text-lg font-medium truncate">{task.name}</p>
                     <div className="flex items-center gap-x-2">
@@ -169,7 +169,7 @@ export const ProjectList = ({ projects, total }: ProjectListProps) => {
               <Link
                 href={`/workspaces/${project.workspaceId}/projects/${project.$id}`}
               >
-                <Card className="shadow-none rounded-lg hover:opacity-75 transition">
+                <Card className="shadow-md rounded-lg hover:opacity-75 transition">
                   <CardContent className="p-4 flex items-center gap-x-2.5">
                     <GoProjectRoadmap className="size-4" />
                     <p className="text-lg font-medium truncate">
@@ -215,7 +215,7 @@ export const MemberList = ({ members, total }: MemberListProps) => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {members.map((member) => (
             <li key={member.$id}>
-              <Card className="shadow-none rounded-lg overflow-hidden">
+              <Card className="shadow-md rounded-lg overflow-hidden">
                 <CardContent className="p-3 flex flex-col items-center gap-2.5">
                   <Avatar>
                     <AvatarFallback>

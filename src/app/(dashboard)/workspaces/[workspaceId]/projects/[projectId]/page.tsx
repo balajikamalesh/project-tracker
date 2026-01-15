@@ -3,6 +3,12 @@ import { redirect } from "next/navigation";
 
 import { getCurrent } from "@/features/auth/actions";
 import ProjectIdClient from "./client"
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Trackly  |  Project",
+  description: "A project management tool to track your tasks efficiently.",
+};
 
 const ProjectsIdPage = async () => {
   const user = await getCurrent();

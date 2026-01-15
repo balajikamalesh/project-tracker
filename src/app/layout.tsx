@@ -13,11 +13,6 @@ const inter = Inter({
   subsets: ["latin"]
 })
 
-export const metadata: Metadata = {
-  title: "Trackly  |  Dashboard",
-  description: "A project management tool to track your tasks efficiently.",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
