@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback } from "react";
-import { Loader, PlusIcon } from "lucide-react";
+import { useCallback, useState } from "react";
+import { Loader, PlusIcon, Sparkles } from "lucide-react";
 import { useQueryState } from "nuqs";
 
 import DottedSeparator from "@/components/dotted-separator";
@@ -17,6 +17,8 @@ import DataFilters from "./data-filters";
 import DataKanban from "./data-kanban";
 import { DataTable } from "./data-table";
 import useProjectId from "@/features/projects/hooks/use-project-id";
+import { AIInsightsModal } from "./ai-insights-modal";
+import { cn } from "@/lib/utils";
 
 type Props = {
   hideProjectFilter?: boolean;
@@ -28,6 +30,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
   const { mutate: bulkUpdate } = useBulkUpdatesTasks();
 
   const currentProjectId = useProjectId();
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
 
   const [{ status, projectId, assigneeId, search, dueDate }, setFilters] =
     useTasksFilters();
@@ -65,15 +68,37 @@ const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
               Kanban
             </TabsTrigger>
           </TabsList>
-          <Button
-            variant="teritary"
-            onClick={open}
-            size="sm"
-            className="w-full lg:w-auto"
-          >
-            <PlusIcon className="size-4" />
-            New
-          </Button>
+          <div className="flex gap-2 w-full lg:w-auto">
+            <Button
+              variant="outline"
+              onClick={() => setIsAIModalOpen(true)}
+              size="sm"
+              className={cn(
+                "flex-1 lg:flex-initial transition-all duration-300 relative overflow-hidden group",
+                "hover:shadow-lg hover:shadow-purple-500/30 hover:border-purple-400",
+                "hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50",
+                "dark:hover:from-purple-950/30 dark:hover:to-blue-950/30",
+                "hover:text-purple-700 dark:hover:text-purple-300"
+              )}
+            >
+              <Sparkles className={cn(
+                "size-4 transition-all duration-300 text-purple-500 dark:text-purple-400",
+                "group-hover:rotate-12 group-hover:text-purple-600 dark:group-hover:text-purple-300"
+              )} />
+              <span className="group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-blue-600 dark:group-hover:from-purple-400 dark:group-hover:to-blue-400 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                AI Insights
+              </span>
+            </Button>
+            <Button
+              variant="teritary"
+              onClick={() => open()}
+              size="sm"
+              className="flex-1 lg:flex-initial"
+            >
+              <PlusIcon className="size-4" />
+              New
+            </Button>
+          </div>
         </div>
         <DottedSeparator className="my-4" />
         <DataFilters hideProjectFilter={hideProjectFilter} />
@@ -96,6 +121,10 @@ const TaskViewSwitcher = ({ hideProjectFilter }: Props) => {
           </>
         )}
       </div>
+      <AIInsightsModal 
+        isOpen={isAIModalOpen} 
+        onOpenChange={setIsAIModalOpen}
+      />
     </Tabs>
   );
 };
