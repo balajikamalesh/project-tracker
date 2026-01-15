@@ -35,9 +35,9 @@ const WorkspaceSwitcher = () => {
         <SelectTrigger className="w-full bg-blue-200 font-medium p-1 hover:bg-blue-300 focus:ring-0">
           <SelectValue placeholder="Select a workspace" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="px-0">
           {workspaces?.documents.map((workspace) => (
-            <SelectItem key={workspace.$id} value={workspace.$id}>
+            <SelectItem className="px-0" key={workspace.$id} value={workspace.$id}>
               <div className="flex items-center justify-start gap-3 font-medium">
                 <Avatar className="size-[36px]">
                   <AvatarFallback className="bg-blue-400">
