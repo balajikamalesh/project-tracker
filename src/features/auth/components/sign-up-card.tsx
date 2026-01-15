@@ -134,29 +134,6 @@ export const SignUpCard = () => {
       <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="px-7 py-6 flex flex-col gap-y-4">
-        <Button
-          disabled={false}
-          variant="secondary"
-          size="lg"
-          className="w-full"
-        >
-          <FcGoogle className="mr-2 size-5" />
-          Sign in with Google
-        </Button>
-        <Button
-          disabled={false}
-          variant="secondary"
-          size="lg"
-          className="w-full"
-        >
-          <FaGithub className="mr-2 size-5" />
-          Sign in with Github
-        </Button>
-      </CardContent>
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
       <CardContent className="p-7 flex items-center justify-center">
         <p>
           Already have an account?{" "}
