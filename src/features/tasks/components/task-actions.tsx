@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { ExternalLinkIcon, PencilIcon, Split } from "lucide-react";
 
 import { useConfirm } from "@/hooks/use-confirm";
@@ -7,12 +8,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useProjectId from "@/features/projects/hooks/use-project-id";
 import { useDeleteTask } from "../api/use-delete-task";
 import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 import { useSplitTaskModal } from "../hooks/use-split-task-modal";
 import { Task, TaskStatus } from "../types";
-import { toast } from "sonner";
-import useProjectId from "@/features/projects/hooks/use-project-id";
 
 type TaskActionsProps = {
   children: React.ReactNode;

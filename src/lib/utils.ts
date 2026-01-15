@@ -1,7 +1,8 @@
 /* eslint-disable */
-import { ContextAI } from "@/app/api/ai/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+import { ContextAI } from "@/app/api/ai/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

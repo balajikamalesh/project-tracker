@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreVerticalIcon, Split, SquareChartGantt } from "lucide-react";
 
@@ -9,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { TaskActions } from "./task-actions";
 import { TaskDate } from "./task-date";
 import { Task } from "../types";
-import Link from "next/link";
 
 export const columns: ColumnDef<Task>[] = [
   {

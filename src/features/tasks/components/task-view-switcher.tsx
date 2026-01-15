@@ -4,21 +4,21 @@ import { useCallback, useState } from "react";
 import { Loader, PlusIcon, Sparkles } from "lucide-react";
 import { useQueryState } from "nuqs";
 
+import { cn } from "@/lib/utils";
 import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useProjectId from "@/features/projects/hooks/use-project-id";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useBulkUpdatesTasks } from "../api/use-bulk-update-tasks";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 import { useTasksFilters } from "../hooks/use-tasks-filters";
+import { AIInsightsModal } from "./ai-insights-modal";
 import { columns } from "./columns";
 import DataFilters from "./data-filters";
 import DataKanban from "./data-kanban";
 import { DataTable } from "./data-table";
-import useProjectId from "@/features/projects/hooks/use-project-id";
-import { AIInsightsModal } from "./ai-insights-modal";
-import { cn } from "@/lib/utils";
 
 type Props = {
   hideProjectFilter?: boolean;

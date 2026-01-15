@@ -10,14 +10,19 @@ import { cn } from "@/lib/utils";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { Loader } from "lucide-react";
 
 export const Projects = () => {
   const pathname = usePathname();
   const workspaceId = useWorkspaceId();
-  const { data: projects } = useGetProjects({
+  const { data: projects, isLoading } = useGetProjects({
     workspaceId,
   });
   const { open } = useCreateProjectModal();
+
+  if(isLoading) {
+    return <div className="h-1/2 flex items-center justify-center"><Loader className="size-6 animate-spin" /></div>;
+  }
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -28,7 +33,7 @@ export const Projects = () => {
           className="size-5 text-blue-500 cursor-pointer hover:opacity-75 transition"
         />
       </div>
-      {projects?.map((project) => {
+      {!isLoading && projects?.map((project) => {
         const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
         const isActive = pathname === href;
         return (

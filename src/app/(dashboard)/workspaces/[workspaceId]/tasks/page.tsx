@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
 import { redirect } from 'next/navigation';
+import { Metadata } from 'next';
+import { Loader } from 'lucide-react';
 
 import { getCurrent } from '@/features/auth/actions'
 import TaskViewSwitcher from '@/features/tasks/components/task-view-switcher';
-import { Metadata } from 'next';
-import { Loader } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: "Trackly  |  Tasks"

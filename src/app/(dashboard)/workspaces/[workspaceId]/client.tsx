@@ -1,32 +1,30 @@
 "use client";
 
+import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
 import {
   CalendarIcon,
   Loader,
   PlusIcon,
   Settings,
 } from "lucide-react";
-import Link from "next/link";
+import { GoProjectRoadmap } from "react-icons/go";
 
-import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
-import { useGetMembers } from "@/features/members/api/use-get-member";
-import { useGetProjects } from "@/features/projects/api/use-get-projects";
-import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
-import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
-import { useGetWorkspaceAnalytics } from "@/features/workspaces/api/use-get-workspace-analytics";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-
-import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Analytics from "@/components/analytics";
 import DottedSeparator from "@/components/dotted-separator";
-import { Task } from "@/features/tasks/types";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { Project } from "@/features/projects/types";
-import { GoProjectRoadmap } from "react-icons/go";
 import { Member } from "@/features/members/types";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useGetMembers } from "@/features/members/api/use-get-member";
+import { Project } from "@/features/projects/types";
+import { useGetProjects } from "@/features/projects/api/use-get-projects";
+import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
+import { Task } from "@/features/tasks/types";
+import { useGetTasks } from "@/features/tasks/api/use-get-tasks";
+import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useGetWorkspaceAnalytics } from "@/features/workspaces/api/use-get-workspace-analytics";
 
 const WorkspaceIdClient = () => {
   const workspaceId = useWorkspaceId();
@@ -207,7 +205,7 @@ export const MemberList = ({ members, total }: MemberListProps) => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {members.map((member) => (
             <li key={member.$id}>
-              <Card className="shadow-md rounded-lg overflow-hidden">
+              <Card className="shadow-md rounded-lg overflow-hidden w-fit">
                 <CardContent className="p-3 flex flex-col items-center gap-2.5">
                   <Avatar>
                     <AvatarFallback>

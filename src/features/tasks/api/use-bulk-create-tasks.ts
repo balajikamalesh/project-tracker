@@ -1,5 +1,4 @@
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { InferResponseType, InferRequestType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -10,7 +9,6 @@ type ResponseType = InferResponseType<(typeof client.api.tasks)["bulk-create"]["
 type RequestType = InferRequestType<(typeof client.api.tasks)["bulk-create"]["$post"]>;
 
 export const useBulkCreateTasks = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation<ResponseType, unknown, RequestType>({
@@ -23,8 +21,9 @@ export const useBulkCreateTasks = () => {
     },
     onSuccess: () => {
       toast.success("Tasks created successfully!");
-      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["project-analytics"] });
+      queryClient.invalidateQueries({ queryKey: ["workspace-analytics"] });
     },
     onError: () => {
       toast.error("Failed to create tasks");

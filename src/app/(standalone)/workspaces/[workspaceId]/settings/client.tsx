@@ -1,9 +1,10 @@
 "use client";
 
+import { Loader } from "lucide-react";
+
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { EditWorkspaceForm } from "@/features/workspaces/components/edit-workspace-form";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { Loader } from "lucide-react";
 
 const WorkspaceIdSettingsClient = () => {
   const workspaceId = useWorkspaceId();

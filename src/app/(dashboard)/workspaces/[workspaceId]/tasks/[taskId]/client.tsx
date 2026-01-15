@@ -1,6 +1,8 @@
 /* eslint-disable */
 "use client";
 
+import { Loader } from "lucide-react";
+
 import ErrorPage from "@/app/error";
 import DottedSeparator from "@/components/dotted-separator";
 import { Project } from "@/features/projects/types";
@@ -9,7 +11,6 @@ import TaskBreadcrumbs from "@/features/tasks/components/task-breadcrumbs";
 import TaskDescription from "@/features/tasks/components/task-description";
 import TaskOverview from "@/features/tasks/components/task-overview";
 import UseTaskId from "@/features/tasks/hooks/use-task-id";
-import { Loader } from "lucide-react";
 
 export const TaskIdClient = () => {
   const taskId = UseTaskId();

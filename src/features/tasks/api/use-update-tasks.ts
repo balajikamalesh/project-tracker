@@ -1,9 +1,9 @@
 import { toast } from "sonner";
 import { InferResponseType, InferRequestType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 // Using the types exported from the RPC client to infer request and response types
 type ResponseType = InferResponseType<(typeof client.api.tasks)[":taskId"]["$patch"], 200>;
@@ -27,6 +27,8 @@ export const useUpdateTask = () => {
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", data.$id] });
+      queryClient.invalidateQueries({ queryKey: ["project-analytics"] });
+      queryClient.invalidateQueries({ queryKey: ["workspace-analytics"] });
     },
     onError: () => {
       toast.error("Failed to update task");

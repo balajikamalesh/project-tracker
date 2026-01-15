@@ -2,10 +2,11 @@
 
 import { useEffect } from "react";
 import { useCompletion } from "@ai-sdk/react";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Loader2, Sparkles } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface DescriptionAutocompleteProps {
   value?: string;

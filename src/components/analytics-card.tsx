@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
+
+import { cn } from "@/lib/utils";
 import {
   Card,
   CardHeader,

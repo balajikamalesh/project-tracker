@@ -1,8 +1,9 @@
+import React from "react";
+import { redirect } from "next/navigation";
+
 import { getCurrent } from "@/features/auth/actions";
 import { getWorkspaceInfo } from "@/features/workspaces/actions";
 import { JoinWorkspaceForm } from "@/features/workspaces/components/join-workspace-form";
-import { redirect } from "next/navigation";
-import React from "react";
 
 interface WorkspaceIdJoinPageProps {
   params: {

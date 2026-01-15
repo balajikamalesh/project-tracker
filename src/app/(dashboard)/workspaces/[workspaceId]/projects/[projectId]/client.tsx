@@ -1,15 +1,16 @@
 "use client";
 
 import { Suspense } from "react";
+import Link from "next/link";
+import { Loader, PencilIcon } from "lucide-react";
+import { GoProjectRoadmap } from "react-icons/go";
+
 import Analytics from "@/components/analytics";
 import { Button } from "@/components/ui/button";
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { useGetProjectAnalytics } from "@/features/projects/api/use-get-project-analytics";
 import useProjectId from "@/features/projects/hooks/use-project-id";
 import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
-import { Loader, PencilIcon } from "lucide-react";
-import Link from "next/link";
-import { GoProjectRoadmap } from "react-icons/go";
 
 const ProjectIdClient = () => {
   const projectId = useProjectId();

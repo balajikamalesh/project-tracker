@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+import React, { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { useCompletion } from "@ai-sdk/react";
+import { Loader, Sparkles, RefreshCw } from "lucide-react";
+
 import DottedSeparator from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import useProjectId from "@/features/projects/hooks/use-project-id";
-import { Loader, Sparkles, RefreshCw } from "lucide-react";
-import React, { useState, useEffect } from "react";
 import { useGetTask } from "../api/use-get-task";
-import { Button } from "@/components/ui/button";
-import { useCompletion } from "@ai-sdk/react";
-import { toast } from "sonner";
 import { useBulkCreateTasks } from "../api/use-bulk-create-tasks";
 
 type Props = {

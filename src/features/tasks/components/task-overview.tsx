@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import React from "react";
-import { Task } from "../types";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Loader, PencilIcon, Split, SquareChartGantt } from "lucide-react";
-import DottedSeparator from "@/components/dotted-separator";
-import OverviewProperty from "./overview-property";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { TaskDate } from "./task-date";
+
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { useEditTaskModal } from "../hooks/use-edit-task-modal";
+import { Button } from "@/components/ui/button";
+import DottedSeparator from "@/components/dotted-separator";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useGetSubTasks } from "../api/use-get-sub-tasks";
-import Link from "next/link";
 import { useGetTask } from "../api/use-get-task";
+import { useEditTaskModal } from "../hooks/use-edit-task-modal";
+import { Task } from "../types";
+import OverviewProperty from "./overview-property";
+import { TaskDate } from "./task-date";
 
 type Props = {
   task: Task;

@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 import { getCurrent } from "@/features/auth/actions";
 import WorkspaceIdSettingsClient from "./client";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Trackly  |  Settings"

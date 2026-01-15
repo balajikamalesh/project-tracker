@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/Sidebar";
 import { CreateProjectModal } from "@/features/projects/components/create-project-modal";

@@ -1,7 +1,8 @@
-import { client } from "@/lib/rpc";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferResponseType, InferRequestType } from "hono";
+
+import { client } from "@/lib/rpc";
 
 // Using the types esported from the RPC client to infer request and response types'
 type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]["join"]["$post"], 200>;

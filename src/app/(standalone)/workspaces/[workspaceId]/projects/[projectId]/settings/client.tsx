@@ -1,9 +1,10 @@
 "use client";
 
+import { Loader } from "lucide-react";
+
 import { useGetProject } from "@/features/projects/api/use-get-project";
 import { EditProjectForm } from "@/features/projects/components/edit-project-form";
 import useProjectId from "@/features/projects/hooks/use-project-id";
-import { Loader } from "lucide-react";
 
 const ProjectIdSettingsClient = () => {
   const projectId = useProjectId();
